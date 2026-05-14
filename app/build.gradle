@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'app.dropframe.dev.workers.nnadigideon20.tanstackstartapp'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "app.dropframe.dev.workers.nnadigideon20.tanstackstartapp"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        manifestPlaceholders = [
+            hostName: "tanstack-start-app.nnadigideon20.workers.dev",
+            defaultUrl: "https://tanstack-start-app.nnadigideon20.workers.dev/",
+            launcherName: "SignalMe",
+            assetStatements: '[{ "relation": ["delegate_permission/common.handle_all_urls"], "target": { "namespace": "web", "site": "https://tanstack-start-app.nnadigideon20.workers.dev"}}]'
+        ]
+    }
+
+    signingConfigs {
+        release {
+            if (System.getenv("KEYSTORE_PATH")) {
+                storeFile file(System.getenv("KEYSTORE_PATH"))
+                storePassword System.getenv("KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.browser:browser:1.7.0'
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0'
+}
